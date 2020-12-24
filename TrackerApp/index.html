@@ -12,10 +12,10 @@
         <textarea></textarea>
         <!-- Tracker Analytics -->
         <script type="text/javascript">
-            const socket = io.connect('ws://127.0.0.1:5000');
+            const socket = io.connect('ws://127.0.0.1:3003');
 
             const Tracker = (new TrackerUniversal(socket));
-            Tracker.RecordTrace("#11111111111111");
+            Tracker.RecordTrace("Test1");
         </script>
     </body>
 </html>

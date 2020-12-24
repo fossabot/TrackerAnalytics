@@ -3,7 +3,7 @@ class TrackerUniversal {
     {
         this.socket  = socket
 
-        this.client = 
+        this.client =
         {
             url : window.location.href || document.URL,
             host: window.location.host,
@@ -122,23 +122,27 @@ class TrackerUniversal {
     {
         let touchPoints = navigator.maxTouchPoints || 0;
         let timestamp   = Date.now()
-        data = { ...data, user: this.user }
 
-        this.save(this.client, id, event, X, Y, currentX, currentY, data, touchPoints, timestamp)
+        this.save(this.client, id, event, X, Y, currentX, currentY, data.target, data.key, touchPoints, timestamp)
     }
 
-    save(client, TraceID, event, X, Y, currentX, currentY, data, touchPoints, timestamp) 
+    save(client, TraceID, event, X, Y, currentX, currentY, target, key, touchPoints, timestamp)
     {
         (this.socket).emit('analytics', 
         {
-            client: client, 
-            TraceID: TraceID, 
+            targetUrl: this.client.url,
+            trace: TraceID,
             event: event, 
             X: X, 
             Y: Y, 
             currentX: currentX, 
-            currentY: currentY, 
-            data: data, 
+            currentY: currentY,
+            screenWidth: this.user.screen.width,
+            screenHeight: this.user.screen.height,
+            target: target,
+            key: key,
+            userAgent: this.user.userAgent,
+            platform: this.user.platform,
             touchPoints: touchPoints, 
             timestamp: timestamp
         })

@@ -1,32 +1,42 @@
 import { server, io } from "./service";
 import { Socket } from "socket.io";
+import db from './db';
 
 const port     = process.env.PORT;
 const hostname = process.env.APP;
-
-server.on('error', (error: NodeJS.ErrnoException): void => {
-  if (error.syscall !== 'listen') throw error
-  const bind = (typeof port === 'string') ? 'Pipe ' + port : 'Port ' + port
-  switch (error.code) {
-    case 'EACCES':
-      console.error(`${bind} requires elevated privileges`)
-      process.exit(1)
-      break
-    case 'EADDRINUSE':
-      console.error(`${bind} is already in use`)
-      process.exit(1)
-      break
-    default:
-      throw error
-  }
-})
 
 /**
  * Socket
  */
 io.on('connection', (socket:Socket) => {
   socket.on('analytics', (data) => {
-    console.log(data);
+    // TODO: Insert to the db
+    db.run(`
+        INSERT INTO events (
+            url,
+            trace,
+            name,
+            X,
+            Y,
+            currentX,
+            currentY,
+            screenWidth,
+            screenHeight,
+            touchPoints,
+            timestamp,
+            platform,
+            userAgent,
+            target,
+            key
+        )
+        VALUES('${data.targetUrl}', '${data.trace}', '${data.event}', '${data.X}', '${data.Y}', '${data.currentX}',
+        '${data.currentY}', '${data.screenWidth}', '${data.screenHeight}', '${data.touchPoints}', '${data.timestamp}',
+        '${data.platform}', '${data.userAgent}', '${data.target}', '${data.key}');
+    `, (err => {
+      if(err){
+        console.log(err)
+      }
+    }))
   });
 });
 

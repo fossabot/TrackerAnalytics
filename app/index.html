@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+    <!-- .head -->
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./src/socket.io.js"></script>
+        <script type="text/javascript" src="./src/main.js"></script>
+    </head>
+    <!-- .body -->
+    <body>
+        <textarea></textarea>
+        <!-- Tracker Analytics -->
+        <script>
+            const socket = io.connect('ws://127.0.0.1:5000');
+
+            const Tracker = (new TrackerUniversal(socket));
+            Tracker.RecordTrace("#11111111111111");
+        </script>
+    </body>
+</html>

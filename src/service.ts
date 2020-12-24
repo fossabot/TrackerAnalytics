@@ -1,4 +1,5 @@
-import express from "express";
+/// <reference types="node" />
+import express, { Request, Response, Next } from "express";
 import routers from "./routers";
 import compression from "compression";
 import timeout from "connect-timeout";
@@ -11,7 +12,27 @@ import helmet from "helmet";
 import cors from "cors";
 import ErrorHandler from "api-error-handler";
 
+// tslint:disable-next-line:no-var-requires
+const socketIoInit = require('socket.io')
+
 const app = express();
+// tslint:disable-next-line:no-var-requires
+const server = require('http').createServer(app);
+const io = socketIoInit(server, {
+  handlePreflightRequest: (req:Request, res:Response) => {
+    res.writeHead(200, {
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Origin": req.headers.origin,
+      "Access-Control-Allow-Credentials": true
+    });
+    res.end();
+  },
+  cors: {
+    origin: '*',
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 
 /**
  * Configuration
@@ -59,6 +80,6 @@ app.use(express.static(path.join(__dirname, './../public')));
 /**
  * Timeout Error
  */
-app.use((req,_res,next)=> { if (!req.timedout) next() });
+app.use((req: Request, _res: Response, next: Next)=> { if (!req.timedout) next() });
 
-export default app
+export { server, app, io }

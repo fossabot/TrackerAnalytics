@@ -1,0 +1,49 @@
+{
+  "name": "@emigatech/tracker-analytics",
+  "version": "0.1.0",
+  "description": "TrackerAnalytics",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "node .",
+    "clean": "rimraf build/*",
+    "tsc": "tsc -p tsconfig.json",
+    "lint": "tslint -c tslint.json -p tsconfig.json --fix",
+    "dev:start": "npm run build && npm run start",
+    "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
+    "minify": "uglifyjs-folder build -e -x .js -o build",
+    "build": "npm run clean && npm run lint && npm run tsc && npm run minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emigatech/TrackerAnalytics.git"
+  },
+  "author": "Emin Muhammadi <muemin17631@sabah.edu.az> (https://github.com/eminmuhammadi)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emigatech/TrackerAnalytics/issues"
+  },
+  "homepage": "https://github.com/emigatech/TrackerAnalytics#readme",
+  "devDependencies": {
+    "nodemon": "2.0.4",
+    "rimraf": "3.0.2",
+    "uglifyjs-folder": "2.0.0"
+  },
+  "dependencies": {
+    "@types/node": "14.6.0",
+    "api-error-handler": "1.0.0",
+    "compression": "1.7.4",
+    "connect-timeout": "1.9.0",
+    "cors": "2.8.5",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "express-winston": "4.0.5",
+    "helmet": "4.1.0",
+    "morgan": "1.10.0",
+    "path": "0.12.7",
+    "ts-node": "9.0.0",
+    "tslint": "6.1.3",
+    "tslint-eslint-rules": "5.4.0",
+    "typescript": "4.0.2",
+    "winston": "3.3.3"
+  }
+}

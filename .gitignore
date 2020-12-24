@@ -4,6 +4,8 @@ node_modules
 build
 *.db
 *.db-journal
+./database.db-journal
+./database.db
 
 # Logs
 logs

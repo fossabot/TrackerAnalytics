@@ -1,7 +1,9 @@
+// Analytics
 class TrackerUniversal {
-    constructor(socket) 
+    constructor(socket, modules)
     {
-        this.socket  = socket
+        this.socket  = modules.io.connect('ws://127.0.0.1:3003');
+        this.domElementPath = modules.domElementPath;
 
         this.client =
         {
@@ -105,37 +107,56 @@ class TrackerUniversal {
         onvolumechange = (e) => this.context(id, e)
         onwaiting = (e) => this.context(id, e)
         onwheel = (e) => this.context(id, e)
+        oncancel = (e) => this.context(id, e)
+        onclose = (e) => this.context(id, e)
+        oncuechange = (e) => this.context(id, e)
+        onemptied = (e) => this.context(id, e)
+        onauxclick = (e) => this.context(id, e)
+        ongotpointercapture = (e) => this.context(id, e)
+        onlostpointercapture = (e) => this.context(id, e)
+        onpointerdown = (e) => this.context(id, e)
+        onpointermove = (e) => this.context(id, e)
+        onpointerup = (e) => this.context(id, e)
+        onpointercancel = (e) => this.context(id, e)
+        onpointerover = (e) => this.context(id, e)
+        onpointerout = (e) => this.context(id, e)
+        onpointerenter = (e) => this.context(id, e)
+        onpointerleave = (e) => this.context(id, e)
+        onselectstart = (e) => this.context(id, e)
+        onselectionchange = (e) => this.context(id, e)
     }
 
     context(id, e) 
     {
-        return this.log(id, 
+        return this.log(id,
                         e.type, 
                         e.clientX || null, // user device X screen location
                         e.clientY || null, // user device Y screen location
                         e.pageX || null, // current X location in page
                         e.pageY || null, // current Y location in page
-                        { target: e.target.nodeName||null, key:e.key||null});
+                         (this.domElementPath(e.target)) || null, // target path
+                         e.key || e.data || null // key
+                        );
     }
 
-    log(id, event, X, Y, currentX, currentY, data) 
+    log(id, event, X, Y, currentX, currentY, target, key)
     {
         let touchPoints = navigator.maxTouchPoints || 0;
         let timestamp   = Date.now()
 
-        this.save(this.client, id, event, X, Y, currentX, currentY, data.target, data.key, touchPoints, timestamp)
+        this.save(this.client, id, event, X, Y, currentX, currentY, target, key, touchPoints, timestamp)
     }
 
     save(client, TraceID, event, X, Y, currentX, currentY, target, key, touchPoints, timestamp)
     {
-        (this.socket).emit('analytics', 
+        (this.socket).emit('analytics',
         {
             targetUrl: this.client.url,
             trace: TraceID,
-            event: event, 
-            X: X, 
-            Y: Y, 
-            currentX: currentX, 
+            event: event,
+            X: X,
+            Y: Y,
+            currentX: currentX,
             currentY: currentY,
             screenWidth: this.user.screen.width,
             screenHeight: this.user.screen.height,
@@ -143,7 +164,7 @@ class TrackerUniversal {
             key: key,
             userAgent: this.user.userAgent,
             platform: this.user.platform,
-            touchPoints: touchPoints, 
+            touchPoints: touchPoints,
             timestamp: timestamp
         })
     }

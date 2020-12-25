@@ -1,10 +1,7 @@
-import express, { Request, Response, Next } from "express";
+import express from "express";
+import selectEvents from "./events/select";
 const router = express.Router();
 
-router.get('/', (_req: Request, res: Response, _next: Next) =>
-{
-  res.status(200)
-    .json(null);
-})
+router.use('/events',selectEvents);
 
 export default router;

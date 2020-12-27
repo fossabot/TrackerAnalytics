@@ -17,6 +17,8 @@
         "<all_urls>"
       ],
       "js": [
+        "./lib/underscore.min.js",
+        "./lib/observe.js",
         "./lib/client.min.js",
         "./lib/crypto.min.js",
         "./lib/socket.io.min.js",

@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="en" dir="auto">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb.min.js"></script>
 </head>
 <body>
 <script type="module">
-    fetch('http://127.0.0.1:3003/api/sessions?fingerprint=2066725520&limit=-1&offset=0')
+    fetch('http://127.0.0.1:3003/api/sessions?fingerprint=1697191491&limit=-1&offset=0')
         .then(response => response.json())
         .then((data) => {
             /**
@@ -23,7 +25,7 @@
              * Display a player
              */
             const webPlayer = window.rrweb;
-            const getVideo  = new webPlayer.Replayer(events);
+            const getVideo  = new webPlayer.Replayer(events.reverse());
             getVideo.play();
             console.log('Captured Events', events)
         });

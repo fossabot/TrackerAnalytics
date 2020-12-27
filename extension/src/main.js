@@ -10,6 +10,7 @@ class TrackerAnalytics {
         this.rrweb     = lib.rrwebRecord;
         this.Client    = new lib.ClientJS();
         this.CryptoJS  = lib.CryptoJS;
+        this.underscore= lib._;
     }
 
     /**
@@ -60,13 +61,36 @@ class TrackerAnalytics {
         /**
          *  Record and Emit sessions
          */
-        // this.EmitEvent(TraceSession,'CreateSession',events[events.length-1])
-        // TODO: Events maker
+        let events = [];
+        let __event_i__ = 0;
+
         (this.rrweb)({
             emit(event)
             {
-                // event.push
+                if(__event_i__===1)
+                {
+                    events[1]=event;
+                    __event_i__++;
+                }
+                else if(__event_i__===2){
+                    events[2]=event;
+                }
+                else{
+                    events[0]=event;
+                    __event_i__++;
+                }
             }
         });
+
+        (this.underscore).observe(events, () => {
+            if(events.length === 2)
+            {
+                this.EmitEvent(TraceSession,'CreateSession', events[0]);
+                this.EmitEvent(TraceSession,'CreateSession', events[1]);
+            }
+            else {
+                this.EmitEvent(TraceSession,'CreateSession', events[2]);
+            }
+        })
     }
 }

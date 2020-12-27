@@ -9,38 +9,40 @@ const hostname = process.env.APP;
  * Socket
  */
 io.on('connection', (socket:Socket) => {
-  socket.on('analytics', (data) => {
-    // TODO: Insert to the db
+  socket.on('CreateSession', (data) => {
     db.run(`
-        INSERT INTO events (
-            url,
-            trace,
-            name,
-            X,
-            Y,
-            currentX,
-            currentY,
-            screenWidth,
-            screenHeight,
-            touchPoints,
+        INSERT INTO sessions (
+            session,
             timestamp,
-            platform,
+            fingerprint,
+            resolution,
             userAgent,
-            target,
-            key
+            browser,
+            browserVersion,
+            engine,
+            engineVersion,
+            os,
+            osVersion,
+            cpu,
+            isMobileAndroid,
+            isMobileIOS,
+            isMobile,
+            eventDataJSON
         )
-        VALUES('${data.targetUrl}', '${data.trace}', '${data.event}', '${data.X}', '${data.Y}', '${data.currentX}',
-        '${data.currentY}', '${data.screenWidth}', '${data.screenHeight}', '${data.touchPoints}', '${data.timestamp}',
-        '${data.platform}', '${data.userAgent}', '${data.target}', '${data.key}');
-    `, (err => {
-      if(err){
-        console.log(err)
-      }
+        VALUES('${data.session}','${data.timestamp}','${data.fingerprint}','${data.resolution}','${data.userAgent}',
+            '${data.browser}','${data.browserVersion}','${data.engine}','${data.engineVersion}','${data.os}',
+            '${data.osVersion}','${data.cpu}','${data.isMobileAndroid}','${data.isMobileIOS}','${data.isMobile}',
+            '${data.eventDataJSON}');`,
+        (err => {
+          if(err)
+          {
+            console.log(err)
+          }
     }))
   });
 });
 
 server.listen(port, hostname, () => {
   // tslint:disable-next-line:no-console
-  console.log(`@eminmuhammadi/TrackerAnalytics listening at http://${hostname}:${port}`);
+  console.log(`@eminmuhammadi/TrackerAnalytics listening at ${hostname}:${port}`);
 });

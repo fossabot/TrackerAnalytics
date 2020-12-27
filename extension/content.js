@@ -1,8 +1,8 @@
 /**
- * @type {TrackerUniversal}
+ * @type {TrackerAnalytics}
  */
-const Tracker = (new TrackerUniversal('ws://localhost:3003', {io}));
+const Tracker = (new TrackerAnalytics('http://127.0.0.1:3003', {io,rrwebRecord,ClientJS,CryptoJS}));
 /**
  *  Start Recording
  */
-Tracker.RecordTrace("Testing example.com");
+Tracker.RecordTrace(Tracker.Session());

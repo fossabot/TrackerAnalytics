@@ -1,7 +1,7 @@
 import express from "express";
-import selectEvents from "./events/select";
+import selectEvents from "./sessions/select";
 const router = express.Router();
 
-router.use('/events',selectEvents);
+router.use('/sessions',selectEvents);
 
 export default router;

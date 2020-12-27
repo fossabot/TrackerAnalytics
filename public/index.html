@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb.min.js"></script>
+</head>
+<body>
+<script type="module">
+    fetch('http://127.0.0.1:3003/api/sessions?fingerprint=2066725520&limit=-1&offset=0')
+        .then(response => response.json())
+        .then((data) => {
+            /**
+             * Get Events from API
+             * @type {Array}
+             */
+            console.log(data);
+            let events = [];
+            for (let i=0; i<data.data.length; i++)
+            {
+                events.push(JSON.parse(data.data[i].eventDataJSON));
+            }
+            /**
+             * Display a player
+             */
+            const webPlayer = window.rrweb;
+            const getVideo  = new webPlayer.Replayer(events);
+            getVideo.play();
+            console.log('Captured Events', events)
+        });
+</script>
+</body>
+</html>

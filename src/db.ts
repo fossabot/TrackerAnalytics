@@ -5,23 +5,24 @@ const db = new sqlite3.Database('./database.db');
 // TODO: DB Table Generator
 db.serialize(()=> {
     db.run(`
-        CREATE TABLE IF NOT EXISTS events (
-            event_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            url TEXT NOT NULL,
-            trace TEXT NOT NULL,
-            name TEXT NULL,
-            X INTEGER,
-            Y INTEGER,
-            currentX INTEGER,
-            currentY INTEGER,
-            screenWidth INTEGER,
-            screenHeight INTEGER,
-            touchPoints INTEGER,
-            timestamp INTEGER,
-            platform TEXT,
+        CREATE TABLE IF NOT EXISTS sessions (
+            session_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session TEXT NOT NULL,
+            timestamp INTEGER ,
+            fingerprint TEXT,
+            resolution TEXT,
             userAgent TEXT,
-            target TEXT,
-            key TEXT
+            browser TEXT,
+            browserVersion TEXT,
+            engine TEXT,
+            engineVersion TEXT,
+            os TEXT,
+            osVersion TEXT,
+            cpu TEXT,
+            isMobileAndroid TEXT,
+            isMobileIOS TEXT,
+            isMobile TEXT,
+            eventDataJSON TEXT
         );
     `);
 });

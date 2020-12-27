@@ -67,6 +67,10 @@ class TrackerAnalytics {
         (this.rrweb)({
             emit(event)
             {
+                /**
+                 * It is hard to emit events
+                 * using socket.io
+                 */
                 if(__event_i__===1)
                 {
                     events[1]=event;

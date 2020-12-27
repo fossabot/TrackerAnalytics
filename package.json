@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@types/node": "14.6.0",
+    "@types/node-fetch": "2.5.7",
     "@types/socket.io": "2.1.12",
     "api-error-handler": "1.0.0",
     "compression": "1.7.4",
@@ -38,8 +39,10 @@
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "express-winston": "4.0.5",
+    "fs": "0.0.1-security",
     "helmet": "4.1.0",
     "morgan": "1.10.0",
+    "node-fetch": "2.6.1",
     "path": "0.12.7",
     "rrweb": "0.9.11",
     "socket.io": "3.0.4",

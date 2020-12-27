@@ -4,18 +4,10 @@
   "version": "0.1.0",
   "author": "Emin Muhammadi",
   "description": "A socket based app for TrackerAnalytics",
-  "permissions": [
-    "background",
-    "system.cpu",
-    "system.display",
-    "system.memory",
-    "system.storage"
-  ],
+  "permissions": [],
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
+      "matches": ["<all_urls>"],
       "js": [
         "./lib/underscore.min.js",
         "./lib/observe.js",

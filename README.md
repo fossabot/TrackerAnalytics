@@ -1,7 +1,7 @@
 # TrackerAnalytics
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/eminmuhammadi/TrackerAnalytics@latest/dist/TrackerAnalytics.min.js"></script>
+<script src="https://raw.githubusercontent.com/eminmuhammadi/TrackerAnalytics/0.1.0/dist/TrackerAnalytics.min.js"></script>
 ```
 
 ```javascript

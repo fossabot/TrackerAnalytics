@@ -1,5 +1,7 @@
 # TrackerAnalytics
 
+
+## Record using Browser
 ```html
 <!doctype html>
 <html lang="en">
@@ -28,3 +30,7 @@
 </body>
 </html>
 ```
+## Record using [Extension](/extension)
+
+## Play recorded interactions
+http://127.0.0.1:3003/play?fingerprint= ```fingerprint``` &session= ```sessions``` &limit= ```limit``` &offset= ```offset```

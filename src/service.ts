@@ -8,8 +8,8 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import winston from "winston";
 import expressWinston from "express-winston";
-// import helmet from "helmet";
-// import cors from "cors";
+import helmet from "helmet";
+import cors from "cors";
 import ErrorHandler from "api-error-handler";
 import fs from "fs";
 
@@ -42,8 +42,17 @@ dotenv.config({ path: path.join(__dirname, './../.env') });
 app.disable('x-powered-by');
 app.set('json spaces', 40);
 app.use(timeout('60s'));
-// app.use(cors());
-// app.use(helmet());
+app.use(cors());
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.expectCt());
+app.use(helmet.frameguard());
+app.use(helmet.hidePoweredBy());
+app.use(helmet.hsts());
+app.use(helmet.ieNoOpen());
+app.use(helmet.noSniff());
+app.use(helmet.permittedCrossDomainPolicies());
+app.use(helmet.referrerPolicy());
+app.use(helmet.xssFilter());
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -70,11 +79,12 @@ app.use(expressWinston.logger({
 /**
  * Routers
  */
-app.use('/', routers)
+app.use('/', routers);
 /**
  * Storage
  */
 app.use(express.static(path.join(__dirname, './../public')));
+
 /**
  * TrackerAnalytics Engine
  */
@@ -83,13 +93,23 @@ app.engine('TrackerAnalytics',  (filePath, options, callback) =>
   fs.readFile(filePath,  (err, content) =>
   {
     if (err) return callback(err);
-    // @ts-ignore
-    const rendered = content.toString()
-        .replace('#url#',  options.url)
-        .replace('#homeUrl#', options.homeUrl);
+    let rendered = content.toString();
+
+    Object.entries(options).forEach(([key,value]) =>
+    {
+      if (typeof value === 'string')
+      {
+        rendered = rendered.replace(`{{%${key}%}}`,  value)
+      }
+    });
+
+    rendered = ''+rendered.replace(/ +(?= )/g,'');
+    rendered = rendered.replace(/\s{2,}/g, ' ');
+
     return callback(null, rendered)
   })
 });
+
 app.set('views', path.join(__dirname, './../views'));
 app.set('view engine', 'TrackerAnalytics');
 /**

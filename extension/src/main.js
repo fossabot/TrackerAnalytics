@@ -45,9 +45,9 @@ class TrackerAnalytics {
             os: (this.Client).getOS() || null,
             osVersion: (this.Client).getOSVersion() || null,
             cpu: (this.Client).getCPU() || null,
-            isMobileAndroid: (this.Client).isMobileAndroid() || null,
-            isMobileIOS: (this.Client).isMobileIOS() || null,
-            isMobile: (this.Client).isMobile() || null,
+            isMobileAndroid: (this.Client).isMobileAndroid() || false,
+            isMobileIOS: (this.Client).isMobileIOS() || false,
+            isMobile: (this.Client).isMobile() || false,
             eventDataJSON: JSON.stringify(data) || null
         });
     }

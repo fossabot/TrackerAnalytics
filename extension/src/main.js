@@ -83,7 +83,18 @@ class TrackerAnalytics {
                     events[0]=event;
                     __event_i__++;
                 }
-            }
+                const Log = console.log["__rrweb_original__"]?console.log["__rrweb_original__"]:console.log;
+                Log(event);
+            },
+            recordLog: {
+                level: ["info", "log", "warn", "error"],
+                lengthThreshold: 10000,
+                stringifyOptions: {
+                    stringLengthLimit: 1000,
+                    numOfKeysLimit: 100,
+                },
+                logger: window.console,
+            },
         });
 
         (this.underscore).observe(events, () => {

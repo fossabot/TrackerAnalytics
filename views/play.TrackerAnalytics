@@ -1,26 +1,46 @@
 <!doctype html>
-<html dir="auto" style="cursor:none;">
+<html dir="auto">
+
 <head>
     <script type="text/javascript"> window.onload=function(){function e(e){return e.stopPropagation?e.stopPropagation():window.event&&(window.event.cancelBubble=!0),e.preventDefault(),!1}document.addEventListener("contextmenu",function(e){e.preventDefault()},!1),document.addEventListener("keydown",function(t){t.ctrlKey&&t.shiftKey&&73==t.keyCode&&e(t),t.ctrlKey&&t.shiftKey&&74==t.keyCode&&e(t),83==t.keyCode&&(navigator.platform.match("Mac")?t.metaKey:t.ctrlKey)&&e(t),t.ctrlKey&&85==t.keyCode&&e(t),123==event.keyCode&&e(t)},!1)};</script>
     <base href="{{%homeUrl%}}"/>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="/assets/rrweb.css"/>
-    <script type="text/javascript" src="/assets/rrweb.min.js"></script>
+    <link rel="stylesheet" href="/assets/app.css"/>
 </head>
-<body oncontextmenu="return false;" style="cursor:none">
-      <script type="module">
-        let   events    = [];
-        const sessions  = JSON.parse(unescape("{{%sessions%}}"));
 
-        for(let i=0; i<(sessions.data).length; i++)
-        {
-             events.push(JSON.parse(sessions.data[i].eventDataJSON));
-        }
+<body oncontextmenu="return false;" style="max-width: 100%;max-height: 100%">
 
-        const webPlayer = window.rrweb;
-        const getVideo  = new webPlayer.Replayer(events.reverse());
-        getVideo.play();
+      <div id="app-root"></div>
+
+      <script type="text/javascript" src="/assets/app.min.js"></script>
+      <script type="text/javascript">
+          (function() {
+              let   events    = [];
+              const sessions  = JSON.parse(unescape("{{%sessions%}}"));
+
+              for(let i=0; i<(sessions.data).length; i++)
+              {
+                  events.push(JSON.parse(sessions.data[i].eventDataJSON));
+              }
+
+              events = events.reverse();
+
+              new rrwebPlayer({
+                  target: document.getElementById('app-root'),
+                  props: {
+                      events,
+                      showController: true,
+                      autoPlay: true,
+                      mouseTail: true,
+                      UNSAFE_replayCanvas: true,
+                      showDebug: true,
+                      logConfig: {
+                          level: ["info", "log", "warn", "error"]
+                      },
+                  },
+              });
+          })();
       </script>
 </body>
 </html>

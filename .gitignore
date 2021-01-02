@@ -9,6 +9,7 @@ build
 .idea
 .idea/*
 .idea/
+*.xml
 
 # Logs
 logs

@@ -17,7 +17,7 @@ npm install
 npm run dev
 ```
 
-Please, use a Docker for production environment.
+Please, use a Docker for production environment. Note: please rename ```.sample.env``` to ```.env```.
 
 ## Usage
 ### Record using Browser

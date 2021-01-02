@@ -6,6 +6,9 @@ build
 *.db-journal
 ./database.db-journal
 ./database.db
+.idea
+.idea/*
+.idea/
 
 # Logs
 logs
